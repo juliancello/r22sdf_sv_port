@@ -2,18 +2,18 @@
 //  Multiply: Complex Multiplier
 //----------------------------------------------------------------------
 module Multiply #(
-    parameter   WIDTH = 16
+    parameter   int WIDTH = 16
 )(
-    input   signed  [WIDTH-1:0] a_re,
-    input   signed  [WIDTH-1:0] a_im,
-    input   signed  [WIDTH-1:0] b_re,
-    input   signed  [WIDTH-1:0] b_im,
-    output  signed  [WIDTH-1:0] m_re,
-    output  signed  [WIDTH-1:0] m_im
+    input   logic signed  [WIDTH-1:0] a_re,
+    input   logic signed  [WIDTH-1:0] a_im,
+    input   logic signed  [WIDTH-1:0] b_re,
+    input   logic signed  [WIDTH-1:0] b_im,
+    output  logic signed  [WIDTH-1:0] m_re,
+    output  logic signed  [WIDTH-1:0] m_im
 );
 
-wire signed [WIDTH*2-1:0]   arbr, arbi, aibr, aibi;
-wire signed [WIDTH-1:0]     sc_arbr, sc_arbi, sc_aibr, sc_aibi;
+logic signed [WIDTH*2-1:0]   arbr, arbi, aibr, aibi;
+logic signed [WIDTH-1:0]     sc_arbr, sc_arbi, sc_aibr, sc_aibi;
 
 //  Signed Multiplication
 assign  arbr = a_re * b_re;

@@ -4,14 +4,14 @@
 module FFT #(
     parameter   WIDTH = 16
 )(
-    input               clock,  //  Master Clock
-    input               reset,  //  Active High Asynchronous Reset
-    input               di_en,  //  Input Data Enable
-    input   [WIDTH-1:0] di_re,  //  Input Data (Real)
-    input   [WIDTH-1:0] di_im,  //  Input Data (Imag)
-    output              do_en,  //  Output Data Enable
-    output  [WIDTH-1:0] do_re,  //  Output Data (Real)
-    output  [WIDTH-1:0] do_im   //  Output Data (Imag)
+    input logic               clock,  //  Master Clock
+    input logic               reset,  //  Active High Asynchronous Reset
+    input logic              di_en,  //  Input Data Enable
+    input logic  [WIDTH-1:0] di_re,  //  Input Data (Real)
+    input logic  [WIDTH-1:0] di_im,  //  Input Data (Imag)
+    output logic             do_en,  //  Output Data Enable
+    output logic [WIDTH-1:0] do_re,  //  Output Data (Real)
+    output logic  [WIDTH-1:0] do_im   //  Output Data (Imag)
 );
 //----------------------------------------------------------------------
 //  Data must be input consecutively in natural order.
@@ -19,15 +19,15 @@ module FFT #(
 //  The output latency is 137 clock cycles.
 //----------------------------------------------------------------------
 
-wire            su1_do_en;
-wire[WIDTH-1:0] su1_do_re;
-wire[WIDTH-1:0] su1_do_im;
-wire            su2_do_en;
-wire[WIDTH-1:0] su2_do_re;
-wire[WIDTH-1:0] su2_do_im;
-wire            su3_do_en;
-wire[WIDTH-1:0] su3_do_re;
-wire[WIDTH-1:0] su3_do_im;
+logic            su1_do_en;
+logic[WIDTH-1:0] su1_do_re;
+logic[WIDTH-1:0] su1_do_im;
+logic            su2_do_en;
+logic[WIDTH-1:0] su2_do_re;
+logic[WIDTH-1:0] su2_do_im;
+logic            su3_do_en;
+logic[WIDTH-1:0] su3_do_re;
+logic[WIDTH-1:0] su3_do_im;
 
 SdfUnit #(.N(128),.M(128),.WIDTH(WIDTH)) SU1 (
     .clock  (clock      ),  //  i

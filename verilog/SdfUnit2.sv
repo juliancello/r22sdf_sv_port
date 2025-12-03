@@ -5,40 +5,40 @@ module SdfUnit2 #(
     parameter   WIDTH = 16, //  Data Bit Length
     parameter   BF_RH = 0   //  Butterfly Round Half Up
 )(
-    input                   clock,  //  Master Clock
-    input                   reset,  //  Active High Asynchronous Reset
-    input                   di_en,  //  Input Data Enable
-    input       [WIDTH-1:0] di_re,  //  Input Data (Real)
-    input       [WIDTH-1:0] di_im,  //  Input Data (Imag)
-    output  reg             do_en,  //  Output Data Enable
-    output  reg [WIDTH-1:0] do_re,  //  Output Data (Real)
-    output  reg [WIDTH-1:0] do_im   //  Output Data (Imag)
+    input  logic                   clock,  //  Master Clock
+    input  logic                   reset,  //  Active High Asynchronous Reset
+    input  logic                   di_en,  //  Input Data Enable
+    input  logic       [WIDTH-1:0] di_re,  //  Input Data (Real)
+    input  logic       [WIDTH-1:0] di_im,  //  Input Data (Imag)
+    output logic                   do_en,  //  Output Data Enable
+    output logic       [WIDTH-1:0] do_re,  //  Output Data (Real)
+    output logic       [WIDTH-1:0] do_im   //  Output Data (Imag)
 );
 
 //----------------------------------------------------------------------
 //  Internal Regs and Nets
 //----------------------------------------------------------------------
-reg             bf_en;      //  Butterfly Add/Sub Enable
-wire[WIDTH-1:0] x0_re;      //  Data #0 to Butterfly (Real)
-wire[WIDTH-1:0] x0_im;      //  Data #0 to Butterfly (Imag)
-wire[WIDTH-1:0] x1_re;      //  Data #1 to Butterfly (Real)
-wire[WIDTH-1:0] x1_im;      //  Data #1 to Butterfly (Imag)
-wire[WIDTH-1:0] y0_re;      //  Data #0 from Butterfly (Real)
-wire[WIDTH-1:0] y0_im;      //  Data #0 from Butterfly (Imag)
-wire[WIDTH-1:0] y1_re;      //  Data #1 from Butterfly (Real)
-wire[WIDTH-1:0] y1_im;      //  Data #1 from Butterfly (Imag)
-wire[WIDTH-1:0] db_di_re;   //  Data to DelayBuffer (Real)
-wire[WIDTH-1:0] db_di_im;   //  Data to DelayBuffer (Imag)
-wire[WIDTH-1:0] db_do_re;   //  Data from DelayBuffer (Real)
-wire[WIDTH-1:0] db_do_im;   //  Data from DelayBuffer (Imag)
-wire[WIDTH-1:0] bf_sp_re;   //  Single-Path Data Output (Real)
-wire[WIDTH-1:0] bf_sp_im;   //  Single-Path Data Output (Imag)
-reg             bf_sp_en;   //  Single-Path Data Enable
+logic             bf_en;      //  Butterfly Add/Sub Enable
+logic[WIDTH-1:0] x0_re;      //  Data #0 to Butterfly (Real)
+logic[WIDTH-1:0] x0_im;      //  Data #0 to Butterfly (Imag)
+logic[WIDTH-1:0] x1_re;      //  Data #1 to Butterfly (Real)
+logic[WIDTH-1:0] x1_im;      //  Data #1 to Butterfly (Imag)
+logic[WIDTH-1:0] y0_re;      //  Data #0 from Butterfly (Real)
+logic[WIDTH-1:0] y0_im;      //  Data #0 from Butterfly (Imag)
+logic[WIDTH-1:0] y1_re;      //  Data #1 from Butterfly (Real)
+logic[WIDTH-1:0] y1_im;      //  Data #1 from Butterfly (Imag)
+logic[WIDTH-1:0] db_di_re;   //  Data to DelayBuffer (Real)
+logic[WIDTH-1:0] db_di_im;   //  Data to DelayBuffer (Imag)
+logic[WIDTH-1:0] db_do_re;   //  Data from DelayBuffer (Real)
+logic[WIDTH-1:0] db_do_im;   //  Data from DelayBuffer (Imag)
+logic[WIDTH-1:0] bf_sp_re;   //  Single-Path Data Output (Real)
+logic[WIDTH-1:0] bf_sp_im;   //  Single-Path Data Output (Imag)
+logic             bf_sp_en;   //  Single-Path Data Enable
 
 //----------------------------------------------------------------------
 //  Butterfly Add/Sub
 //----------------------------------------------------------------------
-always @(posedge clock or posedge reset) begin
+always_ff @(posedge clock or posedge reset) begin
     if (reset) begin
         bf_en <= 1'b0;
     end else begin
@@ -76,7 +76,7 @@ assign  db_di_im = bf_en ? y1_im : di_im;
 assign  bf_sp_re = bf_en ? y0_re : db_do_re;
 assign  bf_sp_im = bf_en ? y0_im : db_do_im;
 
-always @(posedge clock or posedge reset) begin
+always_ff @(posedge clock or posedge reset) begin
     if (reset) begin
         bf_sp_en <= 1'b0;
         do_en <= 1'b0;
@@ -86,7 +86,7 @@ always @(posedge clock or posedge reset) begin
     end
 end
 
-always @(posedge clock) begin
+always_ff @(posedge clock) begin
     do_re <= bf_sp_re;
     do_im <= bf_sp_im;
 end

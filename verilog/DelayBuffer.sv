@@ -1,24 +1,24 @@
 //----------------------------------------------------------------------
 //  DelayBuffer: Generate Constant Delay
 //----------------------------------------------------------------------
-module DelayBuffer #(
+module DelayBuffer
+#(
     parameter   DEPTH = 32,
     parameter   WIDTH = 16
 )(
-    input               clock,  //  Master Clock
-    input   [WIDTH-1:0] di_re,  //  Data Input (Real)
-    input   [WIDTH-1:0] di_im,  //  Data Input (Imag)
-    output  [WIDTH-1:0] do_re,  //  Data Output (Real)
-    output  [WIDTH-1:0] do_im   //  Data Output (Imag)
+    input clock,  //  Master Clock
+    input logic  [WIDTH-1:0] di_re,  //  Data Input (Real)
+    input logic  [WIDTH-1:0] di_im,  //  Data Input (Imag)
+    output logic  [WIDTH-1:0] do_re,  //  Data Output (Real)
+    output logic [WIDTH-1:0] do_im   //  Data Output (Imag)
 );
 
-reg [WIDTH-1:0] buf_re[0:DEPTH-1];
-reg [WIDTH-1:0] buf_im[0:DEPTH-1];
-integer n;
+logic [WIDTH-1:0] buf_re[0:DEPTH-1];
+logic [WIDTH-1:0] buf_im[0:DEPTH-1];
 
 //  Shift Buffer
-always @(posedge clock) begin
-    for (n = DEPTH-1; n > 0; n = n - 1) begin
+always_ff @(posedge clock) begin
+    for (int n = DEPTH-1; n > 0; n = n - 1) begin
         buf_re[n] <= buf_re[n-1];
         buf_im[n] <= buf_im[n-1];
     end
