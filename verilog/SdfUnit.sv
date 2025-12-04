@@ -100,16 +100,21 @@ logic             mu_do_en;   //  Multiplication Output Data Enable
 //----------------------------------------------------------------------
 //  1st Butterfly
 //----------------------------------------------------------------------
-always_ff @(posedge clock or posedge reset) begin
+    always_ff @(posedge clock or posedge reset) begin // Data input tracking and control
     if (reset) begin
-        di_count <= {LOG_N{1'b0}};
+        di_count <= {LOG_N{1'b0}}; // Data count is reset to 0s
     end else begin
-        di_count <= di_en ? (di_count + 1'b1) : {LOG_N{1'b0}};
+        di_count <= di_en ? (di_count + 1'b1) : {LOG_N{1'b0}}; // If input data enable, increment data count 1, else data count equals logn 0s
     end
 end
-assign  bf1_bf = di_count[LOG_M-1];
+    assign  bf1_bf = di_count[LOG_M-1]; // Butterfly add/sub enable equals data count at index logm-1
 
 //  Set unknown value x for verification
+// Connecting data buffer output or don't cares to butterfly input depending on add/sub enable
+// If butterfly add/sub enable, data 0 to butterfly equals data from delay buffer
+// Else, data 0 to butterfly equals don't care bit times 'width'. 
+// If butterfly add/sub enable, data 1 to butterfly equals SDFUnit data in
+// Else, data  to butterfly equals don't care bit times 'width'.
 assign  bf1_x0_re = bf1_bf ? db1_do_re : {WIDTH{1'bx}};
 assign  bf1_x0_im = bf1_bf ? db1_do_im : {WIDTH{1'bx}};
 assign  bf1_x1_re = bf1_bf ? di_re : {WIDTH{1'bx}};
@@ -134,6 +139,13 @@ DelayBuffer #(.DEPTH(2**(LOG_M-1)),.WIDTH(WIDTH)) DB1 (
     .do_im  (db1_do_im  )   //  o
 );
 
+// Routing SDFUnit output data or butterfly output data to delay buffer input depending on butterfly add/sub enable
+// If butterfly add/sub enable, data to delay buffer equals data from butterfly.
+// Else, data to delay buffer equals SDFUnit data in
+// Routing data from butterfly to single-path data output if butterfly add/sub enable, or twiddle factors if disabled. 
+// If butterfly add/sub enable, Single-path data output equals data from butterfly equals data from butterfly
+// Else if twiddle enable, Single-path data output equals data from delay buffer imaginary
+// Else Single-path data output equals data from delay buffer real
 assign  db1_di_re = bf1_bf ? bf1_y1_re : di_re;
 assign  db1_di_im = bf1_bf ? bf1_y1_im : di_im;
 assign  bf1_sp_re = bf1_bf ? bf1_y0_re : bf1_mj ?  db1_do_im : db1_do_re;
