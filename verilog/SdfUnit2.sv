@@ -1,5 +1,6 @@
 //----------------------------------------------------------------------
 //  SdfUnit2: Radix-2 SDF Dedicated for Twiddle Resolution M = 2
+// SystemVerilog conversion done by Navid Shamszadeh
 //----------------------------------------------------------------------
 module SdfUnit2 #(
     parameter   WIDTH = 16, //  Data Bit Length
