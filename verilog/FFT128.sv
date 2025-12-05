@@ -1,5 +1,6 @@
 //----------------------------------------------------------------------
 //  FFT: 128-Point FFT Using Radix-2^2 Single-Path Delay Feedback
+// Modified by Julian Kosanovic
 //----------------------------------------------------------------------
 module FFT #(
     parameter   WIDTH = 16
