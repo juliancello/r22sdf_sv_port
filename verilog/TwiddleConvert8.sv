@@ -1,5 +1,6 @@
 //----------------------------------------------------------------------
 //  TwiddleConvert8: Convert Twiddle Value to Reduce Table Size to 1/8
+// Modified by Navid Shamszadeh
 //----------------------------------------------------------------------
 module TwiddleConvert8 #(
     parameter   LOG_N = 6,      //  Address Bit Length
