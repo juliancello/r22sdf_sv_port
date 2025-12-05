@@ -1,6 +1,7 @@
 
 //----------------------------------------------------------------------
 //  TwiddleConvert4: Convert Twiddle Value to Reduce Table Size to 1/4
+// Modified by Frezewd Debebe
 //----------------------------------------------------------------------
 module TwiddleConvert4 #(
     parameter   int LOG_N = 6,      //  Address Bit Length
