@@ -1,6 +1,8 @@
 r22sdf
 ======
+*Team 3 ported this project to Systemverilog. Our files are mainly in the /verilog/ folder.*
 
+  
 Implementation of pipeline FFT described in Verilog HDL.
 
 * Radix-2<sup>2</sup> single-path delay feedback (R2<sup>2</sup>SDF) architecture
