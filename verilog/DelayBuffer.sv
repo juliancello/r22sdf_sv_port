@@ -1,5 +1,6 @@
 //----------------------------------------------------------------------
 //  DelayBuffer: Generate Constant Delay
+// Modified by Julian Kosanovic
 //----------------------------------------------------------------------
 module DelayBuffer
 #(
