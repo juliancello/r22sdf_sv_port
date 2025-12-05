@@ -1,5 +1,6 @@
 //----------------------------------------------------------------------
 //  Twiddle: 128-Point Twiddle Table for Radix-2^2 Butterfly
+// Modified by Frezewd Debebe
 //----------------------------------------------------------------------
 module Twiddle #(
     parameter   bit TW_FF = 1   //  Use Output Register
