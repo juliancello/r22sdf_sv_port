@@ -1,5 +1,6 @@
 //----------------------------------------------------------------------
 //  Butterfly: Add/Sub and Scaling
+// Modified by Julian Kosanovic
 //----------------------------------------------------------------------
 module Butterfly #(
     parameter   int WIDTH = 16,
